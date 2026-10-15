@@ -64,7 +64,7 @@ Click the power icon in the top panel to open the menu. From there:
 - Press **Escape** or click anywhere outside the buttons to close the menu
   without doing anything.
 
-Run This command from anywhere **Terminal**/**Launcher** to open the menu:
+Run this command from anywhere **Terminal**/**Launcher** to open the menu:
 ```
   gdbus call --session \
   --dest org.gnome.Shell \

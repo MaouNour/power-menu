@@ -64,6 +64,14 @@ Click the power icon in the top panel to open the menu. From there:
 - Press **Escape** or click anywhere outside the buttons to close the menu
   without doing anything.
 
+Run This command from anywhere **Terminal**/**Launcher** to open the menu:
+```
+  gdbus call --session \
+  --dest org.gnome.Shell \
+  --object-path /org/gnome/Shell/Extensions/PowerMenu \
+  --method org.gnome.Shell.Extensions.PowerMenu.toggleOverlay
+```
+
 ## File structure
 
 | File                     | Purpose                                             |

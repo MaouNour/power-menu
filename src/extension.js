@@ -5,7 +5,14 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import { PowerMenuOverlay } from './powerMenuOverlay.js';
 import { PowerMenuIndicator } from './powerMenuIndicator.js';
+import Gio from "gi://Gio";
 
+const DBUS_IFACE = `
+<node>
+  <interface name="org.gnome.Shell.Extensions.PowerMenu">
+    <method name="toggleOverlay"/>
+  </interface>
+</node>`;
 export default class PowerMenuExtension extends Extension {
     enable() {
         this._overlay = null;
@@ -18,6 +25,8 @@ export default class PowerMenuExtension extends Extension {
                 global.dashToPanel ? 'center' : 'right');
             return GLib.SOURCE_REMOVE;
         });
+        this._dbus = Gio.DBusExportedObject.wrapJSObject(DBUS_IFACE, this);
+        this._dbus.export(Gio.DBus.session, "/org/gnome/Shell/Extensions/PowerMenu");
     }
 
     disable() {
@@ -29,6 +38,8 @@ export default class PowerMenuExtension extends Extension {
         this._overlay?.destroy();
         this._indicator.destroy();
         this._indicator = null;
+        this._dbus.unexport();
+        this._dbus = null;
     }
 
     toggleOverlay() {
